@@ -10,3 +10,6 @@ router.post(
   validateRequest(authValidations.signUpUserSchema),
   authControllers.signUpUser
 );
+
+
+export const authRoutes = router;
