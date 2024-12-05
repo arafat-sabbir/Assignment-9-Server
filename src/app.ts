@@ -50,16 +50,13 @@ app.use("/api/v1", allRoutes);
 
 // Test route
 const test = (req: Request, res: Response) => {
-  res.send("Hello From Prisma/Postgres Api!");
+  res.send("Hello From Our E-Commerce Website!");
 };
 app.get("/", test);
 
 // Use routes
 app.use("/api", allRoutes);
 
-app.get("/", (req: Request, res: Response) => {
-  res.send("Hello World!");
-});
 
 app.use(globalErrorHandler);
 

@@ -12,7 +12,7 @@ model User {
   email     String   @unique
   password  String
   name      String
-  role      Role // ENUM: CUSTOMER, VENDOR, ADMIN
+  role      Role     @default(CUSTOMER)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   vendors   Vendor[] // Relation for Vendor profile (1:1 for Vendors)
@@ -51,12 +51,11 @@ model Product {
   images      String[] // Array of image URLs
   categoryId  Int // Relation to Category
   category    Category    @relation(fields: [categoryId], references: [id])
-  // reviews     Review[]  // Relation for product reviews
+  reviews     Review[] // Relation for product reviews
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
-  CartItem    CartItem[]
-  OrderItem   OrderItem[]
-  Review      Review[]
+  cartItem    CartItem[]
+  orderItem   OrderItem[]
 }
 
 model Category {
