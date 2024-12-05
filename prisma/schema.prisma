@@ -1,0 +1,27 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          Int       @id @default(autoincrement())
+  email       String    @unique
+  password    String
+  name        String
+  role        Role      // ENUM: CUSTOMER, VENDOR, ADMIN
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  // vendors     Vendor[]  // Relation for Vendor profile (1:1 for Vendors)
+  // orders      Order[]   // Relation for customer orders
+  // reviews     Review[]  // Relation for product reviews
+}
+
+enum Role {
+  CUSTOMER
+  VENDOR
+  ADMIN
+}
