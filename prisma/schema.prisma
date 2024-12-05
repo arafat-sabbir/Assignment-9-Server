@@ -15,7 +15,7 @@ model User {
   role        Role      // ENUM: CUSTOMER, VENDOR, ADMIN
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
-  // vendors     Vendor[]  // Relation for Vendor profile (1:1 for Vendors)
+  vendors     Vendor[]  // Relation for Vendor profile (1:1 for Vendors)
   // orders      Order[]   // Relation for customer orders
   // reviews     Review[]  // Relation for product reviews
 }
@@ -24,4 +24,16 @@ enum Role {
   CUSTOMER
   VENDOR
   ADMIN
+}
+
+
+model Vendor {
+  id          Int       @id @default(autoincrement())
+  userId      Int       @unique // Relation to User
+  user        User      @relation(fields: [userId], references: [id])
+  shopName    String
+  shopLogo    String?
+  shopDesc    String?
+  // products    Product[] // Relation for products added by this vendor
+  // orders      Order[]   // Orders placed for this vendor's products
 }
