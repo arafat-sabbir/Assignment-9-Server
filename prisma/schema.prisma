@@ -50,8 +50,17 @@ model Product {
   inventory   Int
   images      String[]  // Array of image URLs
   categoryId  Int       // Relation to Category
-  // category    Category  @relation(fields: [categoryId], references: [id])
+  category    Category  @relation(fields: [categoryId], references: [id])
   // reviews     Review[]  // Relation for product reviews
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
+}
+
+
+
+
+model Category {
+  id          Int       @id @default(autoincrement())
+  name        String    @unique
+  products    Product[] // Relation for products in this category
 }
