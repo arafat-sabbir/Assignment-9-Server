@@ -16,11 +16,9 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   vendors   Vendor[] // Relation for Vendor profile (1:1 for Vendors)
-  // orders      Order[]   // Relation for customer orders
-  // reviews     Review[]  // Relation for product reviews
+  orders    Order[] // Relation for customer orders
+  reviews   Review[] // Relation for product reviews
   Cart      Cart[]
-  Order     Order[]
-  Review    Review[]
 }
 
 enum Role {
@@ -37,9 +35,8 @@ model Vendor {
   shopLogo String?
   shopDesc String?
   products Product[] // Relation for products added by this vendor
-  // orders      Order[]   // Orders placed for this vendor's products
+  orders   Order[] // Orders placed for this vendor's products
   Cart     Cart[]
-  Order    Order[]
 }
 
 model Product {
