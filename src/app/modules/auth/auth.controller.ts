@@ -11,5 +11,13 @@ const signUpUser = catchAsync(async (req, res, next) => {
   });
 });
 
+const signInUser = catchAsync(async (req, res, next) => {
+  const result = await authServices.signInUser(req.body);
+  sendResponse(res, {
+    data: result,
+    message: "SignIn Successful",
+    statusCode: 200,
+  });
+});
 
-export const authControllers = { signUpUser };
+export const authControllers = { signUpUser, signInUser };

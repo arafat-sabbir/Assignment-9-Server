@@ -8,7 +8,7 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
+  id        String   @id @default(uuid())
   email     String   @unique
   password  String
   name      String
@@ -29,7 +29,7 @@ enum Role {
 
 model Vendor {
   id       Int       @id @default(autoincrement())
-  userId   Int       @unique // Relation to User
+  userId   String       @unique // Relation to User
   user     User      @relation(fields: [userId], references: [id])
   shopName String
   shopLogo String?
@@ -66,7 +66,7 @@ model Category {
 
 model Cart {
   id        Int        @id @default(autoincrement())
-  userId    Int // Relation to User
+  userId    String // Relation to User
   user      User       @relation(fields: [userId], references: [id])
   vendorId  Int // Vendor of products in the cart
   vendor    Vendor     @relation(fields: [vendorId], references: [id])
@@ -86,7 +86,7 @@ model CartItem {
 
 model Order {
   id          Int         @id @default(autoincrement())
-  userId      Int // Relation to User (customer)
+  userId      String // Relation to User (customer)
   user        User        @relation(fields: [userId], references: [id])
   vendorId    Int // Relation to Vendor
   vendor      Vendor      @relation(fields: [vendorId], references: [id])
@@ -117,7 +117,7 @@ model Review {
   id        Int      @id @default(autoincrement())
   productId Int // Relation to Product
   product   Product  @relation(fields: [productId], references: [id])
-  userId    Int // Relation to User
+  userId    String // Relation to User
   user      User     @relation(fields: [userId], references: [id])
   rating    Int // 1 to 5 stars
   comment   String?
