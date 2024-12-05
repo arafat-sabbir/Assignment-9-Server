@@ -1,0 +1,18 @@
+import { z } from "zod";
+
+const signUpUserSchema = z.object({
+  body: z.object({
+    name: z
+      .string({ required_error: "Name is required" })
+      .min(3, { message: "Name must be at least 3 characters long" }),
+    email: z
+      .string({ required_error: "Email is required" })
+      .email({ message: "Invalid email address" }),
+    password: z
+      .string({ required_error: "Password is required" })
+      .min(8, { message: "Password must be at least 8 characters long" }),
+    role: z.enum(["customer", "vendor"]).default("customer"),
+  }),
+});
+
+export const authValidations = { signUpUserSchema };
