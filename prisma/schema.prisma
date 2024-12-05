@@ -8,16 +8,17 @@ datasource db {
 }
 
 model User {
-  id          Int       @id @default(autoincrement())
-  email       String    @unique
-  password    String
-  name        String
-  role        Role      // ENUM: CUSTOMER, VENDOR, ADMIN
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-  vendors     Vendor[]  // Relation for Vendor profile (1:1 for Vendors)
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String
+  name      String
+  role      Role // ENUM: CUSTOMER, VENDOR, ADMIN
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  vendors   Vendor[] // Relation for Vendor profile (1:1 for Vendors)
   // orders      Order[]   // Relation for customer orders
   // reviews     Review[]  // Relation for product reviews
+  Cart      Cart[]
 }
 
 enum Role {
@@ -26,41 +27,58 @@ enum Role {
   ADMIN
 }
 
-
 model Vendor {
-  id          Int       @id @default(autoincrement())
-  userId      Int       @unique // Relation to User
-  user        User      @relation(fields: [userId], references: [id])
-  shopName    String
-  shopLogo    String?
-  shopDesc    String?
-  // products    Product[] // Relation for products added by this vendor
+  id       Int       @id @default(autoincrement())
+  userId   Int       @unique // Relation to User
+  user     User      @relation(fields: [userId], references: [id])
+  shopName String
+  shopLogo String?
+  shopDesc String?
+  products Product[] // Relation for products added by this vendor
   // orders      Order[]   // Orders placed for this vendor's products
+  Cart     Cart[]
 }
 
-
 model Product {
-  id          Int       @id @default(autoincrement())
-  vendorId    Int       // Relation to Vendor
-  vendor      Vendor    @relation(fields: [vendorId], references: [id])
+  id          Int        @id @default(autoincrement())
+  vendorId    Int // Relation to Vendor
+  vendor      Vendor     @relation(fields: [vendorId], references: [id])
   name        String
   description String
   price       Float
-  discount    Float     @default(0.0)
+  discount    Float      @default(0.0)
   inventory   Int
-  images      String[]  // Array of image URLs
-  categoryId  Int       // Relation to Category
-  category    Category  @relation(fields: [categoryId], references: [id])
+  images      String[] // Array of image URLs
+  categoryId  Int // Relation to Category
+  category    Category   @relation(fields: [categoryId], references: [id])
   // reviews     Review[]  // Relation for product reviews
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  CartItem    CartItem[]
 }
 
-
-
-
 model Category {
-  id          Int       @id @default(autoincrement())
-  name        String    @unique
-  products    Product[] // Relation for products in this category
+  id       Int       @id @default(autoincrement())
+  name     String    @unique
+  products Product[] // Relation for products in this category
+}
+
+model Cart {
+  id        Int        @id @default(autoincrement())
+  userId    Int // Relation to User
+  user      User       @relation(fields: [userId], references: [id])
+  vendorId  Int // Vendor of products in the cart
+  vendor    Vendor     @relation(fields: [vendorId], references: [id])
+  cartItems CartItem[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+}
+
+model CartItem {
+  id        Int     @id @default(autoincrement())
+  cartId    Int // Relation to Cart
+  cart      Cart    @relation(fields: [cartId], references: [id])
+  productId Int // Relation to Product
+  product   Product @relation(fields: [productId], references: [id])
+  quantity  Int
 }
