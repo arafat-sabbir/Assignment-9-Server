@@ -127,3 +127,11 @@ model Review {
   comment   String?
   createdAt DateTime @default(now())
 }
+
+model Coupon {
+  id        Int      @id @default(autoincrement())
+  code      String   @unique
+  discount  Float // Percentage or flat amount
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+}
