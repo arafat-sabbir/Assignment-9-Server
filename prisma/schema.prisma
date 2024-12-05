@@ -37,3 +37,21 @@ model Vendor {
   // products    Product[] // Relation for products added by this vendor
   // orders      Order[]   // Orders placed for this vendor's products
 }
+
+
+model Product {
+  id          Int       @id @default(autoincrement())
+  vendorId    Int       // Relation to Vendor
+  vendor      Vendor    @relation(fields: [vendorId], references: [id])
+  name        String
+  description String
+  price       Float
+  discount    Float     @default(0.0)
+  inventory   Int
+  images      String[]  // Array of image URLs
+  categoryId  Int       // Relation to Category
+  // category    Category  @relation(fields: [categoryId], references: [id])
+  // reviews     Review[]  // Relation for product reviews
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
