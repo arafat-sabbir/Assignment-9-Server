@@ -19,6 +19,7 @@ model User {
   // orders      Order[]   // Relation for customer orders
   // reviews     Review[]  // Relation for product reviews
   Cart      Cart[]
+  Order     Order[]
 }
 
 enum Role {
@@ -37,24 +38,26 @@ model Vendor {
   products Product[] // Relation for products added by this vendor
   // orders      Order[]   // Orders placed for this vendor's products
   Cart     Cart[]
+  Order    Order[]
 }
 
 model Product {
-  id          Int        @id @default(autoincrement())
+  id          Int         @id @default(autoincrement())
   vendorId    Int // Relation to Vendor
-  vendor      Vendor     @relation(fields: [vendorId], references: [id])
+  vendor      Vendor      @relation(fields: [vendorId], references: [id])
   name        String
   description String
   price       Float
-  discount    Float      @default(0.0)
+  discount    Float       @default(0.0)
   inventory   Int
   images      String[] // Array of image URLs
   categoryId  Int // Relation to Category
-  category    Category   @relation(fields: [categoryId], references: [id])
+  category    Category    @relation(fields: [categoryId], references: [id])
   // reviews     Review[]  // Relation for product reviews
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
   CartItem    CartItem[]
+  OrderItem   OrderItem[]
 }
 
 model Category {
@@ -81,4 +84,33 @@ model CartItem {
   productId Int // Relation to Product
   product   Product @relation(fields: [productId], references: [id])
   quantity  Int
+}
+
+model Order {
+  id          Int         @id @default(autoincrement())
+  userId      Int // Relation to User (customer)
+  user        User        @relation(fields: [userId], references: [id])
+  vendorId    Int // Relation to Vendor
+  vendor      Vendor      @relation(fields: [vendorId], references: [id])
+  orderItems  OrderItem[]
+  totalAmount Float
+  status      OrderStatus // ENUM: PENDING, SHIPPED, DELIVERED, CANCELED
+  createdAt   DateTime    @default(now())
+}
+
+model OrderItem {
+  id        Int     @id @default(autoincrement())
+  orderId   Int // Relation to Order
+  order     Order   @relation(fields: [orderId], references: [id])
+  productId Int // Relation to Product
+  product   Product @relation(fields: [productId], references: [id])
+  quantity  Int
+  price     Float
+}
+
+enum OrderStatus {
+  PENDING
+  SHIPPED
+  DELIVERED
+  CANCELED
 }
