@@ -20,6 +20,7 @@ model User {
   // reviews     Review[]  // Relation for product reviews
   Cart      Cart[]
   Order     Order[]
+  Review    Review[]
 }
 
 enum Role {
@@ -58,6 +59,7 @@ model Product {
   updatedAt   DateTime    @updatedAt
   CartItem    CartItem[]
   OrderItem   OrderItem[]
+  Review      Review[]
 }
 
 model Category {
@@ -113,4 +115,15 @@ enum OrderStatus {
   SHIPPED
   DELIVERED
   CANCELED
+}
+
+model Review {
+  id        Int      @id @default(autoincrement())
+  productId Int // Relation to Product
+  product   Product  @relation(fields: [productId], references: [id])
+  userId    Int // Relation to User
+  user      User     @relation(fields: [userId], references: [id])
+  rating    Int // 1 to 5 stars
+  comment   String?
+  createdAt DateTime @default(now())
 }
