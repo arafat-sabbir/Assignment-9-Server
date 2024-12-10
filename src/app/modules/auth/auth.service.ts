@@ -1,4 +1,4 @@
-import { User } from "@prisma/client";
+import { Status, User } from "@prisma/client";
 import { prisma } from "../../../app";
 import hashInfo from "../../utils/hashInfo";
 import AppError from "../../errors/appError";
@@ -21,7 +21,12 @@ const signInUser = async (payload: { email: string; password: string }) => {
   const user = await prisma.user.findUnique({
     where: { email: payload.email },
   });
-  if (!user) {
+
+  if(user?.status===Status.SUSPENDED){
+    throw new Error("Your Account Is Suspended Contact Support")
+  }
+
+  if (!user||user.status===Status.DELETED) {
     throw new AppError(404, "Account Not Found Try Again");
   } else {
     const isPasswordMatch = await compareInfo(payload.password, user?.password);
