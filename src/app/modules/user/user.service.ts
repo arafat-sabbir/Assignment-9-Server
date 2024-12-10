@@ -13,4 +13,13 @@ const getAllUser = async () => {
   return result;
 };
 
-export const userServices= { getAllUser };
+const getSingleUser = async (id: string) => {
+  const result = await prisma.user.findUniqueOrThrow({
+    where: {
+      id: id,
+    },
+  });
+  return result;
+};
+
+export const userServices = { getAllUser,getSingleUser };

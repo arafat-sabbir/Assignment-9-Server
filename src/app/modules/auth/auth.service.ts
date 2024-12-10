@@ -29,7 +29,7 @@ const signInUser = async (payload: { email: string; password: string }) => {
       throw new AppError(400, "Password Does Not Match Try Again");
     }
     const accessToken = generateToken(user.email, user.id, user.role);
-    return accessToken;
+    return { accessToken };
   }
 };
 
