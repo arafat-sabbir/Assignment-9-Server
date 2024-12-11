@@ -6,6 +6,9 @@ const generateToken = (
   id: string|number,
   role: "CUSTOMER" | "ADMIN" | "VENDOR"
 ) => {
+  console.log("Secret during generation:", config.jwt_access_secret);
+
+
   return jwt.sign({ email, id, role }, config.jwt_access_secret as string, {
     expiresIn: "7d",
   });
