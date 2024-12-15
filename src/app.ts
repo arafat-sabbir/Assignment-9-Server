@@ -46,7 +46,7 @@ app.use(express.json());
 app.use(requestLogger);
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: ["http://localhost:5173",'https://ecommerce-assignment-9.netlify.app'],
     credentials: true,
   })
 );
