@@ -39,7 +39,7 @@ const signInUser = async (payload: { email: string; password: string }) => {
     if (!isPasswordMatch) {
       throw new AppError(400, "Password Does Not Match Try Again");
     }
-    const accessToken = generateToken(user.email, user.id, user.role);
+    const accessToken = generateToken(user.email, user.id, user.role,user?.name);
     return { accessToken };
   }
 };
