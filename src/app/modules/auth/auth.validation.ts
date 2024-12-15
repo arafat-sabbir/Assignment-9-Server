@@ -11,7 +11,7 @@ const signUpUserSchema = z.object({
     password: z
       .string({ required_error: "Password is required" })
       .min(8, { message: "Password must be at least 8 characters long" }),
-    role: z.enum(["customer", "vendor"]).default("customer"),
+    role: z.enum(["USER", "VENDOR"]).default("USER"),
   }),
 });
 
@@ -26,4 +26,4 @@ const signInUserSchema = z.object({
   }),
 });
 
-export const authValidations = { signUpUserSchema,signInUserSchema };
+export const authValidations = { signUpUserSchema, signInUserSchema };

@@ -4,7 +4,7 @@ import config from "../config";
 const generateToken = (
   email: string,
   id: string|number,
-  role: "CUSTOMER" | "ADMIN" | "VENDOR"
+  role: "USER" | "ADMIN" | "VENDOR"
 ) => {
   console.log("Secret during generation:", config.jwt_access_secret);
 

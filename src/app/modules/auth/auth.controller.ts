@@ -3,6 +3,7 @@ import sendResponse from "../../utils/sendResponse";
 import { authServices } from "./auth.service";
 
 const signUpUser = catchAsync(async (req, res, next) => {
+  console.log(req.body,'body');
   const result = await authServices.signUpUser(req.body);
   sendResponse(res, {
     data: result,
