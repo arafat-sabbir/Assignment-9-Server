@@ -16,10 +16,9 @@ router.post(
 
 router.post("/add-category", adminController.addNewCategory);
 
+router.post("/categories", adminController.getAllCategories);
 
-router.post('/categories',adminController.getAllCategories)
-
-
+router.post("/delete-category/:id", adminController.deleteCategory);
 
 const adminRoutes = router;
 export default adminRoutes;
