@@ -3,8 +3,6 @@ import { prisma } from "../../../app";
 
 const createNewShop = async (data: Omit<Vendor, "id"> & { user: string }) => {
   try {
-    console.log(data, "data");
-
     const result = await prisma.vendor.create({
       data: {
         shopName: data.shopName,
@@ -23,4 +21,22 @@ const createNewShop = async (data: Omit<Vendor, "id"> & { user: string }) => {
   }
 };
 
-export const vendorServices = { createNewShop };
+const getAllMyShop = async (id: string) => {
+  const result = await prisma.vendor.findMany({
+    where: {
+      userId: id,
+    },
+  });
+  return result;
+};
+
+const deleteShop = async (id: string) => {
+  const result = await prisma.vendor.delete({
+    where: {
+      id: Number(id),
+    },
+  });
+  return result;
+};
+
+export const vendorServices = { createNewShop, getAllMyShop, deleteShop };
