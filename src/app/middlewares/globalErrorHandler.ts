@@ -23,6 +23,7 @@ const globalErrorHandler: ErrorRequestHandler = (
   res: Response<TGenericErrorResponse>,
   next
 ) => {
+  console.log(error);
   let statusCode = 500;
   let stack = null;
   let message = "Something Went Wrong";
