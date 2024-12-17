@@ -9,15 +9,11 @@ import { upload, uploadImage } from "../../utils/uploadImage";
 const router = Router();
 
 router.post(
-  "/shop",
+  "/add-shop",
   upload.single("shopLogo"),
   uploadImage,
   AuthorizeRequest(Role.VENDOR),
-  (req, res, next) => {
-    req.body.user = req.user?.id;
-    next();
-  },
-  validateRequest(vendorValidations.createVendorSchema),
+  // validateRequest(vendorValidations.createVendorSchema),
   vendorController.createNewShop
 );
 
@@ -27,7 +23,11 @@ router.get(
   vendorController.getAllMyShop
 );
 
-router.delete("/delete-shop/:id");
+router.delete(
+  "/delete-shop/:id",
+  AuthorizeRequest(Role.VENDOR),
+  vendorController.deleteMyShop
+);
 
 const vendorRoutes = router;
 

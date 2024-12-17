@@ -2,6 +2,14 @@ import { Vendor } from "@prisma/client";
 import { prisma } from "../../../app";
 
 const createNewShop = async (data: Omit<Vendor, "id"> & { user: string }) => {
+  const shopExist = await prisma.vendor.findUnique({
+    where:{
+      userId: data.user
+    }
+  })
+  if(shopExist){
+    throw new Error("Shop Already Exist")
+  }
   try {
     const result = await prisma.vendor.create({
       data: {
@@ -30,9 +38,10 @@ const getAllMyShop = async (id: string) => {
   return result;
 };
 
-const deleteShop = async (id: string) => {
+const deleteShop = async (userId: string, id: string) => {
   const result = await prisma.vendor.delete({
     where: {
+      userId,
       id: Number(id),
     },
   });

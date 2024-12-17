@@ -17,6 +17,7 @@ const storage = multer.memoryStorage();
 export const upload = multer({ storage: storage });
 
 export const uploadImage = async (req: Request, res: Response, next: NextFunction) => {
+    console.log(req.body,req.file);
     if (!req.file) {
         return next();
     }
