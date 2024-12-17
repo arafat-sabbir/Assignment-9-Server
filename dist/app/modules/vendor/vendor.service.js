@@ -3,8 +3,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.vendorServices = void 0;
 const app_1 = require("../../../app");
 const createNewShop = async (data) => {
+    const shopExist = await app_1.prisma.vendor.findUnique({
+        where: {
+            userId: data.user
+        }
+    });
+    if (shopExist) {
+        throw new Error("Shop Already Exist");
+    }
     try {
-        console.log(data, "data");
         const result = await app_1.prisma.vendor.create({
             data: {
                 shopName: data.shopName,
@@ -22,4 +29,21 @@ const createNewShop = async (data) => {
         throw new Error("Shop creation failed");
     }
 };
-exports.vendorServices = { createNewShop };
+const getAllMyShop = async (id) => {
+    const result = await app_1.prisma.vendor.findMany({
+        where: {
+            userId: id,
+        },
+    });
+    return result;
+};
+const deleteShop = async (userId, id) => {
+    const result = await app_1.prisma.vendor.delete({
+        where: {
+            userId,
+            id: Number(id),
+        },
+    });
+    return result;
+};
+exports.vendorServices = { createNewShop, getAllMyShop, deleteShop };

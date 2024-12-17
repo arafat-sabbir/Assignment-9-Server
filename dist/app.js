@@ -44,7 +44,10 @@ const requestLogger = (req, res, next) => {
 app.use(express_1.default.json());
 app.use(requestLogger);
 app.use((0, cors_1.default)({
-    origin: ["http://localhost:5173", 'https://ecommerce-assignment-9.netlify.app'],
+    origin: [
+        "http://localhost:5173",
+        "https://ecommerce-assignment-9.netlify.app",
+    ],
     credentials: true,
 }));
 // Use routes
@@ -55,7 +58,7 @@ const test = (req, res) => {
 };
 app.get("/", test);
 // Use routes
-app.use("/api", routes_1.default);
+app.use("/api/v1", routes_1.default);
 app.use(globalErrorHandler_1.default);
 // Handle 404 - Not Found
 app.all("*", (req, res) => {

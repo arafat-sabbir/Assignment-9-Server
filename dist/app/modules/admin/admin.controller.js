@@ -22,11 +22,11 @@ const admin_service_1 = require("./admin.service");
  *
  * @returns {Promise<User>} The updated user object.
  */
-const suspendUser = (0, catchAsync_1.default)(async (req, res) => {
-    const result = await admin_service_1.adminServices.suspendUser(req.params.id);
+const updateUserStatus = (0, catchAsync_1.default)(async (req, res) => {
+    const result = await admin_service_1.adminServices.updateUserStatus(req.params.id, req.body.status);
     (0, sendResponse_1.default)(res, {
         statusCode: 200,
-        message: "User Suspended Successfully",
+        message: "User Status Updated Successfully",
         data: result,
     });
 });
@@ -48,4 +48,34 @@ const addNewCategory = (0, catchAsync_1.default)(async (req, res) => {
         data: result,
     });
 });
-exports.adminController = { suspendUser, addNewCategory };
+const getAllCategories = (0, catchAsync_1.default)(async (req, res) => {
+    const result = await admin_service_1.adminServices.getAllCategories();
+    (0, sendResponse_1.default)(res, {
+        data: result,
+        message: "All Category Retrieved Successfully",
+        statusCode: 200,
+    });
+});
+const deleteCategory = (0, catchAsync_1.default)(async (req, res) => {
+    const result = await admin_service_1.adminServices.deleteCategory(req.params.id);
+    (0, sendResponse_1.default)(res, {
+        data: result,
+        message: "Category Deleted Successfully",
+        statusCode: 200,
+    });
+});
+const updateCategory = (0, catchAsync_1.default)(async (req, res) => {
+    const result = await admin_service_1.adminServices.updateCategory(req.params.id, req.body.name);
+    (0, sendResponse_1.default)(res, {
+        data: result,
+        message: "Category Updated Successfully",
+        statusCode: 200,
+    });
+});
+exports.adminController = {
+    updateUserStatus,
+    addNewCategory,
+    getAllCategories,
+    deleteCategory,
+    updateCategory
+};

@@ -19,6 +19,7 @@ const appError_1 = __importDefault(require("../errors/appError"));
  * @return {Response} The JSON response containing the error message and status code.
  */
 const globalErrorHandler = (error, req, res, next) => {
+    console.log(error);
     let statusCode = 500;
     let stack = null;
     let message = "Something Went Wrong";

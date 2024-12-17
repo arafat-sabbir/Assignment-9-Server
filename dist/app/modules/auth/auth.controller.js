@@ -17,6 +17,7 @@ const signUpUser = (0, catchAsync_1.default)(async (req, res, next) => {
     });
 });
 const signInUser = (0, catchAsync_1.default)(async (req, res, next) => {
+    console.log(req.body);
     const result = await auth_service_1.authServices.signInUser(req.body);
     (0, sendResponse_1.default)(res, {
         data: result,

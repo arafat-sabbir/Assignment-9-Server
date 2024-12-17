@@ -1,13 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.adminServices = void 0;
-/**
- * Admin Services
- *
- * This module contains services which are used to
- * manipulate data on behalf of an administrator.
- */
-const client_1 = require("@prisma/client");
 const app_1 = require("../../../app");
 /**
  * Suspend a user
@@ -19,10 +12,10 @@ const app_1 = require("../../../app");
  *
  * @returns {Promise<User>} The updated user object.
  */
-const suspendUser = async (id) => {
+const updateUserStatus = async (id, status) => {
     const result = await app_1.prisma.user.update({
         where: { id },
-        data: { status: client_1.Status.SUSPENDED },
+        data: { status: status },
     });
     return result;
 };
@@ -42,4 +35,28 @@ const addNewCategory = async (name) => {
     });
     return result;
 };
-exports.adminServices = { suspendUser, addNewCategory };
+const getAllCategories = async () => {
+    const result = await app_1.prisma.category.findMany({});
+    return result;
+};
+const deleteCategory = async (id) => {
+    const result = await app_1.prisma.category.delete({
+        where: { id: Number(id) }, // Ensure proper type conversion
+    });
+    return result;
+};
+const updateCategory = async (id, name) => {
+    const result = await app_1.prisma.category.update({
+        where: { id: Number(id) },
+        data: { name },
+    });
+    console.log(result);
+    return result;
+};
+exports.adminServices = {
+    updateUserStatus,
+    addNewCategory,
+    deleteCategory,
+    getAllCategories,
+    updateCategory,
+};
