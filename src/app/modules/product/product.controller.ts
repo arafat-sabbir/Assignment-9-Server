@@ -20,4 +20,17 @@ const getAllProductForVendor = catchAsync(async (req, res) => {
   });
 });
 
-export const productControllers = { getAllProduct,getAllProductForVendor };
+const addNewProduct = catchAsync(async (req, res) => {
+  const result = await productServices.addNewProduct({
+    vendor: req.user.id,
+    images: req.photos,
+    ...req.body,
+  });
+  sendResponse(res, {
+    data: result,
+    message: "Product Added Successfully",
+    statusCode: 201,
+  });
+});
+
+export const productControllers = { getAllProduct, getAllProductForVendor,addNewProduct };
