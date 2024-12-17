@@ -46,7 +46,10 @@ app.use(express.json());
 app.use(requestLogger);
 app.use(
   cors({
-    origin: ["http://localhost:5173",'https://ecommerce-assignment-9.netlify.app'],
+    origin: [
+      "http://localhost:5173",
+      "https://ecommerce-assignment-9.netlify.app",
+    ],
     credentials: true,
   })
 );
@@ -60,7 +63,7 @@ const test = (req: Request, res: Response) => {
 app.get("/", test);
 
 // Use routes
-app.use("/api", allRoutes);
+app.use("/api/v1", allRoutes);
 
 app.use(globalErrorHandler);
 

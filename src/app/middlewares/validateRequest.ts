@@ -11,7 +11,7 @@ const validateRequest = (
     const finalSchema = strictCheck ? schema.strict() : schema;
 
     // Parse the request body using the final schema.
-    await finalSchema.parseAsync({ body: req.body });
+    await finalSchema.parseAsync({ body: req.body, params: req.params });
 
     // Continue to the next middleware.
     next();

@@ -1,3 +1,4 @@
+import { Status } from "@prisma/client";
 import { prisma } from "../../../app";
 
 const getAllUser = async () => {
@@ -7,6 +8,7 @@ const getAllUser = async () => {
       name: true,
       email: true,
       role: true,
+      status: true,
       createdAt: true,
     },
   });
@@ -22,4 +24,4 @@ const getSingleUser = async (id: string) => {
   return result;
 };
 
-export const userServices = { getAllUser,getSingleUser };
+export const userServices = { getAllUser, getSingleUser };

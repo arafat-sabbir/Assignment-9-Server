@@ -17,11 +17,14 @@ import { adminServices } from "./admin.service";
  *
  * @returns {Promise<User>} The updated user object.
  */
-const suspendUser = catchAsync(async (req, res) => {
-  const result = await adminServices.suspendUser(req.params.id);
+const updateUserStatus = catchAsync(async (req, res) => {
+  const result = await adminServices.updateUserStatus(
+    req.params.id,
+    req.body.status
+  );
   sendResponse(res, {
     statusCode: 200,
-    message: "User Suspended Successfully",
+    message: "User Status Updated Successfully",
     data: result,
   });
 });
@@ -45,4 +48,4 @@ const addNewCategory = catchAsync(async (req, res) => {
   });
 });
 
-export const adminController = { suspendUser, addNewCategory };
+export const adminController = { updateUserStatus, addNewCategory };

@@ -1,9 +1,13 @@
 import { Router } from "express";
 import { adminController } from "./admin.controller";
+import validateRequest from "../../middlewares/validateRequest";
+import { adminValidations } from "./admin.validation";
+import AuthorizeRequest from "../../middlewares/auth";
+import { Role } from "@prisma/client";
 
 const router = Router();
 
-router.post("/suspend/:id", adminController.suspendUser);
+router.post("/update-user-status/:id",AuthorizeRequest(Role.ADMIN),validateRequest(adminValidations.updateUserStatusSchema) ,adminController.updateUserStatus);
 
 router.post("/add-category", adminController.addNewCategory);
 

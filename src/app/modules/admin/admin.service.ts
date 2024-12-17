@@ -17,10 +17,10 @@ import { prisma } from "../../../app";
  *
  * @returns {Promise<User>} The updated user object.
  */
-const suspendUser = async (id: string) => {
+const updateUserStatus = async (id: string, status: Status) => {
   const result = await prisma.user.update({
     where: { id },
-    data: { status: Status.SUSPENDED },
+    data: { status: status },
   });
   return result;
 };
@@ -42,5 +42,4 @@ const addNewCategory = async (name: string) => {
   return result;
 };
 
-export const adminServices = { suspendUser,addNewCategory };
-
+export const adminServices = { updateUserStatus, addNewCategory };
