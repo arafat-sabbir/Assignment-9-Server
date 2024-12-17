@@ -47,9 +47,9 @@ const getAllCategories = async () => {
   return result;
 };
 
-const deleteCategory = async (id: any) => {
+const deleteCategory = async (id: string | number) => {
   const result = await prisma.category.delete({
-    where: { id },
+    where: { id: Number(id) }, // Ensure proper type conversion
   });
   return result;
 };
