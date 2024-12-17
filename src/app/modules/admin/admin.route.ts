@@ -7,9 +7,19 @@ import { Role } from "@prisma/client";
 
 const router = Router();
 
-router.post("/update-user-status/:id",AuthorizeRequest(Role.ADMIN),validateRequest(adminValidations.updateUserStatusSchema) ,adminController.updateUserStatus);
+router.post(
+  "/update-user-status/:id",
+  AuthorizeRequest(Role.ADMIN),
+  validateRequest(adminValidations.updateUserStatusSchema),
+  adminController.updateUserStatus
+);
 
 router.post("/add-category", adminController.addNewCategory);
+
+
+router.post('/categories',adminController.getAllCategories)
+
+
 
 const adminRoutes = router;
 export default adminRoutes;

@@ -48,4 +48,41 @@ const addNewCategory = catchAsync(async (req, res) => {
   });
 });
 
-export const adminController = { updateUserStatus, addNewCategory };
+const getAllCategories = catchAsync(async (req, res) => {
+  const result = await adminServices.getAllCategories();
+  sendResponse(res, {
+    data: result,
+    message: "All Category Retrieved Successfully",
+    statusCode: 200,
+  });
+});
+
+const deleteCategory = catchAsync(async (req, res) => {
+  const result = await adminServices.deleteCategory(req.params.id);
+  sendResponse(res, {
+    data: result,
+    message: "Category Deleted Successfully",
+    statusCode: 200,
+  });
+});
+
+
+const updateCategory = catchAsync(async (req, res) => { 
+  const result = await adminServices.updateCategory(req.params.id, req.body.name);
+  sendResponse(res, {
+    data: result,
+    message: "Category Updated Successfully", 
+    statusCode: 200,
+  });
+});
+
+
+
+
+export const adminController = {
+  updateUserStatus,
+  addNewCategory,
+  getAllCategories,
+  deleteCategory,
+  updateCategory
+};

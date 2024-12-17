@@ -42,4 +42,30 @@ const addNewCategory = async (name: string) => {
   return result;
 };
 
-export const adminServices = { updateUserStatus, addNewCategory };
+const getAllCategories = async () => {
+  const result = await prisma.category.findMany({});
+  return result;
+};
+
+const deleteCategory = async (id: any) => {
+  const result = await prisma.category.delete({
+    where: { id },
+  });
+  return result;
+};
+
+const updateCategory = async (id: any, name: string) => {
+  const result = await prisma.category.update({
+    where: { id },
+    data: { name },
+  });
+  return result;
+};
+
+export const adminServices = {
+  updateUserStatus,
+  addNewCategory,
+  deleteCategory,
+  getAllCategories,
+  updateCategory,
+};
